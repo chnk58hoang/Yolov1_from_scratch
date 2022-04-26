@@ -79,7 +79,7 @@ def main():
         load_checkpoint(torch.load(LOAD_MODEL_FILE), model, optimizer)
 
     train_dataset = VOCDataset(
-        "/kaggle/input/pascalvoc-yolo/train.csv",
+        "/kaggle/input/pascalvoc-yolo/100examples.csv",
         transform=transform,
         img_dir=IMG_DIR,
         label_dir=LABEL_DIR,
