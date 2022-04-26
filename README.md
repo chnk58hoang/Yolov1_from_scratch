@@ -7,5 +7,6 @@ Yolov1 implemented from scratch with PyTorch
 ![image](https://user-images.githubusercontent.com/71833423/165345528-62e5a868-8415-4e6e-aff1-4b3202e6d29f.png)
 
 - Architecture
-![image](https://user-images.githubusercontent.com/71833423/165345685-a766f5ab-53b6-4384-8978-9e84cb8430f4.png)
+![image](https://user-images.githubusercontent.com/71833423/165345794-2d9b1fb7-b4c5-4468-850a-50365bcbb195.png)
+
 
