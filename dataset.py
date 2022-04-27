@@ -41,7 +41,8 @@ class VOCDataset(Dataset):
         img_path = os.path.join(self.img_dir, self.annotations.iloc[index, 0])
         image = Image.open(img_path)
 
-        image, boxes = self.transform(image,boxes)
+        if self.transform:
+            image, boxes = self.transform(image,boxes)
 
         # Label tensor for image
         label_tensor = torch.zeros(self.S, self.S, (self.C + self.B * 5))
