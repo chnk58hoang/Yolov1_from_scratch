@@ -86,7 +86,7 @@ def main():
     )
 
     test_dataset = VOCDataset(
-        "/kaggle/input/pascalvoc-yolo/test.csv", img_dir=IMG_DIR, label_dir=LABEL_DIR,
+        "/kaggle/input/pascalvoc-yolo/100examples.csv", img_dir=IMG_DIR, label_dir=LABEL_DIR,
     )
 
     train_loader = DataLoader(
@@ -107,13 +107,13 @@ def main():
 
     for epoch in range(EPOCHS):
         pred_boxes, target_boxes = get_bboxes(
-            train_loader, model, iou_threshold=0.5, threshold=0.4
+            test_loader, model, iou_threshold=0.5, threshold=0.4
         )
 
         mean_avg_prec = calculate_mAP(
             pred_boxes, target_boxes, iou_threshold=0.5, box_format="midpoint"
         )
-        print(f"Train mAP: {mean_avg_prec}")
+        print(f"mAP: {mean_avg_prec}")
         train_model(train_loader, model, optimizer, loss_fn)
 
 
