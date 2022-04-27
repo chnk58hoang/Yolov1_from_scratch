@@ -15,8 +15,7 @@ class VOCDataset(Dataset):
         self.S = S
         self.B = B
         self.C = C
-        if transform:
-            self.transform = transform
+        self.transform = transform
 
     def __len__(self):
         return len(self.annotations)
@@ -41,7 +40,7 @@ class VOCDataset(Dataset):
         img_path = os.path.join(self.img_dir, self.annotations.iloc[index, 0])
         image = Image.open(img_path)
 
-        if self.transform:
+        if self.transform != None:
             image, boxes = self.transform(image,boxes)
 
         # Label tensor for image
