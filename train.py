@@ -110,11 +110,10 @@ def main():
             train_loader, model, iou_threshold=0.5, threshold=0.4
         )
 
-        mean_avg_prec = caculate_mAP(
+        mean_avg_prec = calculate_mAP(
             pred_boxes, target_boxes, iou_threshold=0.5, box_format="midpoint"
         )
         print(f"Train mAP: {mean_avg_prec}")
-
         train_model(train_loader, model, optimizer, loss_fn)
 
 

@@ -5,9 +5,8 @@ import matplotlib.patches as patches
 from collections import Counter
 
 
-def caculate_iou(box_pred, box_label, box_format='midpoint'):
+def calculate_iou(box_pred, box_label, box_format='midpoint'):
     """
-
     :param box_preds: tensor[x,y,w,h] if midpoint or [x1,y1,x2,y2] if corner
     :param box_label:
     :param box_format: midpoint or corner
@@ -73,7 +72,7 @@ def non_max_supression(pred_bboxes, iou_threshold, prob_threshold, box_format='c
         # keep bounding boxes which have different class with current chosen bbox or iou with chosen_bbox < iou_threshold
         pred_bboxes = [bbox for bbox in pred_bboxes
                        if
-                       bbox[0] != chosen_bbox[0] or caculate_iou(torch.tensor(chosen_bbox[2:]), torch.tensor(bbox[2:]),
+                       bbox[0] != chosen_bbox[0] or calculate_iou(torch.tensor(chosen_bbox[2:]), torch.tensor(bbox[2:]),
                                                                  box_format=box_format) < iou_threshold]
 
         pred_bboxes_after_nms.append(chosen_bbox)
@@ -81,7 +80,7 @@ def non_max_supression(pred_bboxes, iou_threshold, prob_threshold, box_format='c
     return pred_bboxes_after_nms
 
 
-def caculate_mAP(pred_bboxes, target_bboxes, iou_threshold=0.5, box_format='corners', num_classes=20):
+def calculate_mAP(pred_bboxes, target_bboxes, iou_threshold=0.5, box_format='corners', num_classes=20):
     """
 
     :param pred_bboxes: list of [idx,class_label,probability,x1,y1,x2,y2]
@@ -141,7 +140,7 @@ def caculate_mAP(pred_bboxes, target_bboxes, iou_threshold=0.5, box_format='corn
             best_iou = 0
 
             for idx, gt in enumerate(ground_truth_img):
-                iou = caculate_iou(torch.tensor(gt[3:]), torch.tensor(detection[3:]), box_format=box_format)
+                iou = calculate_iou(torch.tensor(gt[3:]), torch.tensor(detection[3:]), box_format=box_format)
                 if iou > best_iou:
                     best_iou = iou
                     best_gt_idx = idx
@@ -313,3 +312,5 @@ def load_checkpoint(checkpoint, model, optimizer):
     print("=> Loading checkpoint")
     model.load_state_dict(checkpoint["state_dict"])
     optimizer.load_state_dict(checkpoint["optimizer"])
+
+

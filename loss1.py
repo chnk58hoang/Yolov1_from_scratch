@@ -31,9 +31,9 @@ class YoloLoss(nn.Module):
         predictions = predictions.reshape(-1, self.S, self.S, self.C + self.B * 5)
 
         # Calculate IoU for the two predicted bounding boxes with target bbox
-        iou_b1 = caculate_iou(predictions[..., 21:25], target[..., 21:25])
+        iou_b1 = calculate_iou(predictions[..., 21:25], target[..., 21:25])
 
-        iou_b2 = caculate_iou(predictions[..., 26:30], target[..., 21:25])
+        iou_b2 = calculate_iou(predictions[..., 26:30], target[..., 21:25])
 
         ious = torch.cat([iou_b1.unsqueeze(0), iou_b2.unsqueeze(0)], dim=0)
 
