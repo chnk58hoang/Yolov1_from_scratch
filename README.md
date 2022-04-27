@@ -13,3 +13,9 @@ Yolov1 implemented from scratch with PyTorch
 # Dataset
 I use the [PascalVOC](https://www.kaggle.com/datasets/734b7bcb7ef13a045cbdd007a3c19874c2586ed0b02b4afc86126e89d00af8d2) dataset on Kaggle for this task.
 ![image](https://user-images.githubusercontent.com/71833423/165568897-ff5c338b-a74a-47cf-be45-c190b064d4ed.png)
+
+# Requirements
+I highly recommend using conda virtual environment
+```bash
+conda install pytorch torchvision
+```
