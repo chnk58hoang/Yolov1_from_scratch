@@ -86,7 +86,7 @@ def main():
     )
 
     test_dataset = VOCDataset(
-        "/kaggle/input/pascalvoc-yolo/100examples.csv", img_dir=IMG_DIR, label_dir=LABEL_DIR,
+        "/kaggle/input/pascalvoc-yolo/100examples.csv", img_dir=IMG_DIR, label_dir=LABEL_DIR,transform=transform,
     )
 
     train_loader = DataLoader(
