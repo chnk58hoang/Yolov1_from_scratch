@@ -324,11 +324,11 @@ class EarlyStopping():
     def __call__(self, mAP):
         if self.best_mAP == None:
             self.best_mAP = mAP
-        elif self.best_mAP - mAP > self.min_delta:
+        elif self.best_mAP - mAP < self.min_delta:
             self.best_mAP = mAP
             # reset counter if validation loss improves
             self.counter = 0
-        elif self.best_mAP - mAP < self.min_delta:
+        elif self.best_mAP - mAP > self.min_delta:
             self.counter += 1
             print(f"INFO: Early stopping counter {self.counter} of {self.patience}")
             if self.counter >= self.patience:
