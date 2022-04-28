@@ -48,7 +48,7 @@ class VOCDataset(Dataset):
 
         # get the label and convert from image to relative to each cell
         for box in boxes:
-            class_label, x_image, y_image, w_image, h_image = box.tolist()
+            class_label, x, y, w_image, h_image = box.tolist()
             class_label = int(class_label)
 
             # get i,j represents the row and collumn of this cell
