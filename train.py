@@ -106,6 +106,7 @@ def main():
     )
 
     for epoch in range(EPOCHS):
+        print(f'Epoch: {epoch + 1}/{EPOCHS}')
         pred_boxes, target_boxes = get_bboxes(
             test_loader, model, iou_threshold=0.5, threshold=0.4
         )
@@ -115,6 +116,9 @@ def main():
         )
         print(f"mAP: {mean_avg_prec}")
         train_model(train_loader, model, optimizer, loss_fn)
+
+        if (epoch + 1) % 10 == 0:
+            torch.save(model.state_dict(), "yolov1_" + str(epoch + 1) + ".pth")
 
 
 if __name__ == "__main__":
