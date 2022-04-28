@@ -10,7 +10,7 @@ from loss1 import YoloLoss
 
 LEARNING_RATE = 2e-5
 DEVICE = "cuda" if torch.cuda.is_available else "cpu"
-BATCH_SIZE = 16
+BATCH_SIZE = 32
 WEIGHT_DECAY = 0
 EPOCHS = 100
 PIN_MEMORY = True
@@ -79,7 +79,7 @@ def main():
         load_checkpoint(torch.load(LOAD_MODEL_FILE), model, optimizer)
 
     train_dataset = VOCDataset(
-        "/kaggle/input/pascalvoc-yolo/100examples.csv",
+        "/kaggle/input/pascalvoc-yolo/train.csv",
         transform=transform,
         img_dir=IMG_DIR,
         label_dir=LABEL_DIR,
