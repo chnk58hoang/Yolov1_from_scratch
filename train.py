@@ -108,7 +108,6 @@ def main():
     early_stopping = EarlyStopping(patience=3, min_delta=0.01)
 
     for epoch in range(EPOCHS):
-        print(f'Epoch: {epoch + 1}/{EPOCHS}')
         pred_boxes, target_boxes = get_bboxes(
             test_loader, model, iou_threshold=0.5, threshold=0.4
         )
@@ -121,6 +120,7 @@ def main():
         if early_stopping.early_stop:
             break
         else:
+            print(f'Epoch: {epoch + 1}/{EPOCHS}')
             train_model(train_loader, model, optimizer, loss_fn)
             lr_scheduler.step(mean_avg_prec)
             if (epoch + 1) % 10 == 0:
