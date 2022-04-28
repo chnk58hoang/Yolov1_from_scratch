@@ -303,7 +303,7 @@ def cellboxes_to_boxes(out, S=7):
     return all_bboxes
 
 
-def save_checkpoint(state, filename="my_checkpoint.pth.tar"):
+def save_checkpoint(state, filename):
     print("=> Saving checkpoint")
     torch.save(state, filename)
 
@@ -312,5 +312,27 @@ def load_checkpoint(checkpoint, model, optimizer):
     print("=> Loading checkpoint")
     model.load_state_dict(checkpoint["state_dict"])
     optimizer.load_state_dict(checkpoint["optimizer"])
+
+
+class EarlyStopping():
+    def __init__(self, patience, min_delta=0):
+        self.patience = patience
+        self.min_delta = min_delta
+        self.counter = 0
+        self.best_mAP = None
+        self.early_stop = False
+    def __call__(self, mAP):
+        if self.best_mAP == None:
+            self.best_mAP = mAP
+        elif self.best_mAP - mAP > self.min_delta:
+            self.best_mAP = mAP
+            # reset counter if validation loss improves
+            self.counter = 0
+        elif self.best_mAP - mAP < self.min_delta:
+            self.counter += 1
+            print(f"INFO: Early stopping counter {self.counter} of {self.patience}")
+            if self.counter >= self.patience:
+                print('INFO: Early stopping')
+                self.early_stop = True
 
 

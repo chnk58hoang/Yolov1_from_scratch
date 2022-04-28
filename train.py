@@ -7,6 +7,7 @@ from model import Yolov1
 from utils import *
 from dataset import VOCDataset
 from loss1 import YoloLoss
+from torch.optim.lr_scheduler import ReduceLROnPlateau
 
 LEARNING_RATE = 2e-5
 DEVICE = "cuda" if torch.cuda.is_available else "cpu"
@@ -15,7 +16,6 @@ WEIGHT_DECAY = 0
 EPOCHS = 50
 PIN_MEMORY = True
 LOAD_MODEL = False
-LOAD_MODEL_FILE = "overfit.pth.tar"
 IMG_DIR = "/kaggle/input/pascalvoc-yolo/images"
 LABEL_DIR = "/kaggle/input/pascalvoc-yolo/labels"
 
@@ -30,7 +30,8 @@ class Compose(object):
 
         return img, bboxes
 
-transform = Compose([transforms.Resize((448, 448)), transforms.ToTensor(),])
+
+transform = Compose([transforms.Resize((448, 448)), transforms.ToTensor(), ])
 
 
 def train_model(train_loader, model, optimizer, loss_fn):
@@ -52,7 +53,7 @@ def train_model(train_loader, model, optimizer, loss_fn):
     print(f"Mean loss was {sum(mean_loss) / len(mean_loss)}")
 
 
-def test_model(test_loader,model,loss_fn):
+def valid_model(test_loader, model, loss_fn):
     loop = tqdm(test_loader, leave=True)
     mean_loss = []
 
@@ -75,8 +76,7 @@ def main():
     )
     loss_fn = YoloLoss()
 
-    if LOAD_MODEL:
-        load_checkpoint(torch.load(LOAD_MODEL_FILE), model, optimizer)
+    lr_scheduler = ReduceLROnPlateau(optimizer, 'max', patience=3)
 
     train_dataset = VOCDataset(
         "/kaggle/input/pascalvoc-yolo/train.csv",
@@ -86,7 +86,7 @@ def main():
     )
 
     test_dataset = VOCDataset(
-        "/kaggle/input/pascalvoc-yolo/100examples.csv", img_dir=IMG_DIR, label_dir=LABEL_DIR,transform=transform,
+        "/kaggle/input/pascalvoc-yolo/100examples.csv", img_dir=IMG_DIR, label_dir=LABEL_DIR, transform=transform,
     )
 
     train_loader = DataLoader(
@@ -105,6 +105,8 @@ def main():
         drop_last=True,
     )
 
+    early_stopping = EarlyStopping(patience=3, min_delta=0.01)
+
     for epoch in range(EPOCHS):
         print(f'Epoch: {epoch + 1}/{EPOCHS}')
         pred_boxes, target_boxes = get_bboxes(
@@ -115,10 +117,14 @@ def main():
             pred_boxes, target_boxes, iou_threshold=0.5, box_format="midpoint"
         )
         print(f"mAP: {mean_avg_prec}")
-        train_model(train_loader, model, optimizer, loss_fn)
-
-        if (epoch + 1) % 10 == 0:
-            torch.save(model.state_dict(), "yolov1_" + str(epoch + 1) + ".pth")
+        early_stopping(mean_avg_prec)
+        if early_stopping.early_stop:
+            break
+        else:
+            train_model(train_loader, model, optimizer, loss_fn)
+            lr_scheduler.step(mean_avg_prec)
+            if (epoch + 1) % 10 == 0:
+                save_checkpoint(state=model.state_dict(), filename='yolov1' + str(epoch + 1) + '.pth.tar')
 
 
 if __name__ == "__main__":
