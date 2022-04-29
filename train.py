@@ -105,7 +105,7 @@ def main():
         drop_last=True,
     )
 
-    early_stopping = EarlyStopping(patience=3, min_delta=0.01)
+    early_stopping = EarlyStopping(patience=5, min_delta=0.01)
 
     for epoch in range(EPOCHS):
         pred_boxes, target_boxes = get_bboxes(
