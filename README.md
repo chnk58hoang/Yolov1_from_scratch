@@ -22,3 +22,6 @@ conda install pytorch torchvision
 # Training 
 I use GPU on Kaggle and evaluate metric is Mean Average Precision (mAP)
 ![image](https://user-images.githubusercontent.com/71833423/165724673-35931cff-419d-4b33-b5f3-8080ed3ef135.png)
+
+# Result 
+![image](https://user-images.githubusercontent.com/71833423/165938222-3a4b59ef-6f8b-49e9-bfee-06284aee0d14.png)
