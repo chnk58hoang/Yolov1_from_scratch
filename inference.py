@@ -49,6 +49,3 @@ if __name__ == '__main__':
                     bboxes = cellboxes_to_boxes(model(x))
                     bboxes = non_max_supression(bboxes[idx], iou_threshold=0.5, prob_threshold=0.4, box_format="midpoint")
                     plot_image(x[idx].permute(1,2,0).to("cpu"), bboxes)
-
-                import sys
-                sys.exit()
