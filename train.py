@@ -125,7 +125,7 @@ def main():
 
 
             print(f'Epoch: {epoch + 1}/{EPOCHS}')
-            train_model(test_loader, model, optimizer, loss_fn)
+            train_model(train_loader, model, optimizer, loss_fn)
 
             lr_scheduler.step(mean_avg_prec)
             if (epoch + 1) % 10 == 0:

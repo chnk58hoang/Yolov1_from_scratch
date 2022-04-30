@@ -28,7 +28,7 @@ if __name__ == '__main__':
 
     transform = Compose([transforms.Resize((448, 448)), transforms.ToTensor(), ])
     test_dataset = VOCDataset(
-        "/kaggle/input/pascalvoc-yolo/100examples.csv", img_dir=IMG_DIR, label_dir=LABEL_DIR, transform=transform,
+        "/kaggle/input/pascalvoc-yolo/8examples.csv", img_dir=IMG_DIR, label_dir=LABEL_DIR, transform=transform,
     )
 
     test_loader = DataLoader(
