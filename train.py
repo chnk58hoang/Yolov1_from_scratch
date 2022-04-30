@@ -105,10 +105,9 @@ def main():
         drop_last=True,
     )
 
-    early_stopping = EarlyStopping(patience=3, min_delta=0.01)
+    early_stopping = EarlyStopping(patience=5, min_delta=0.01)
 
     for epoch in range(EPOCHS):
-        print(f'Epoch: {epoch + 1}/{EPOCHS}')
         pred_boxes, target_boxes = get_bboxes(
             test_loader, model, iou_threshold=0.5, threshold=0.4
         )
@@ -121,10 +120,15 @@ def main():
         if early_stopping.early_stop:
             break
         else:
+
+
+
+            print(f'Epoch: {epoch + 1}/{EPOCHS}')
             train_model(test_loader, model, optimizer, loss_fn)
+
             lr_scheduler.step(mean_avg_prec)
             if (epoch + 1) % 10 == 0:
-                save_checkpoint(state=model.state_dict(), filename='yolov1' + str(epoch + 1) + '.pth.tar')
+                save_checkpoint(state=model.state_dict(), filename='yolov1_' + str(epoch + 1) + '.pth')
 
 
 if __name__ == "__main__":
