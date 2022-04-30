@@ -121,7 +121,7 @@ def main():
         if early_stopping.early_stop:
             break
         else:
-            train_model(train_loader, model, optimizer, loss_fn)
+            train_model(test_loader, model, optimizer, loss_fn)
             lr_scheduler.step(mean_avg_prec)
             if (epoch + 1) % 10 == 0:
                 save_checkpoint(state=model.state_dict(), filename='yolov1' + str(epoch + 1) + '.pth.tar')
