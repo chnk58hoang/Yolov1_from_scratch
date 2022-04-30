@@ -1,6 +1,7 @@
 import torch
 import torchvision.transforms as transforms
 import torch.optim as optim
+import argparse
 from tqdm import tqdm
 from torch.utils.data import DataLoader
 from model import Yolov1
@@ -105,7 +106,7 @@ def main():
         drop_last=True,
     )
 
-    early_stopping = EarlyStopping(patience=5, min_delta=0.01)
+    early_stopping = EarlyStopping(patience=5, min_delta=0.001)
 
     for epoch in range(EPOCHS):
         pred_boxes, target_boxes = get_bboxes(
