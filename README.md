@@ -25,4 +25,6 @@ I use GPU on Kaggle and evaluate metric is Mean Average Precision (mAP)
 
 
 # Result 
-![image](https://user-images.githubusercontent.com/71833423/165938222-3a4b59ef-6f8b-49e9-bfee-06284aee0d14.png)
+![Figure_1](https://user-images.githubusercontent.com/71833423/166099016-7e7911ec-94b6-408d-b0be-6d1b99844927.png)
+![Figure_2](https://user-images.githubusercontent.com/71833423/166099020-07ecb339-b28e-4abd-8404-a8dc28f8f661.png)
+![Figure_3](https://user-images.githubusercontent.com/71833423/166099023-09462670-050e-456f-a87f-51c3baed903c.png)
