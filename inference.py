@@ -36,7 +36,7 @@ for x, y in test_loader:
             x = x.to(DEVICE)
             for idx in range(8):
                 bboxes = cellboxes_to_boxes(model(x))
-                bboxes = non_max_supression(bboxes[idx], iou_threshold=0.5, threshold=0.4, box_format="midpoint")
+                bboxes = non_max_supression(bboxes[idx], iou_threshold=0.5, prob_threshold=0.4, box_format="midpoint")
                 plot_image(x[idx].permute(1,2,0).to("cpu"), bboxes)
 
             import sys
